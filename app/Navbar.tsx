@@ -1,10 +1,14 @@
+"use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 export const Navbar = () => {
+  const { status, data: session } = useSession();
+
   return (
-    <nav className="bg-slate-300 p-2">
+    <nav className="bg-primary p-2">
       <ul className="flex gap-4">
-      <li>
+        <li>
           <Link href="/">Home</Link>
         </li>
         <li>
@@ -16,6 +20,20 @@ export const Navbar = () => {
         <li>
           <Link href="/products">Products</Link>
         </li>
+        {status === "loading" && <div>Loading...</div>}
+        {status === "authenticated" && (
+          <div>
+            {session.user!.name}
+            <Link href="/api/auth/signout" className="ml-3">
+              Sign Out
+            </Link>
+          </div>
+        )}
+        {status === "unauthenticated" && (
+          <li>
+            <Link href="/api/auth/signin">Login</Link>
+          </li>
+        )}
       </ul>
     </nav>
   );
