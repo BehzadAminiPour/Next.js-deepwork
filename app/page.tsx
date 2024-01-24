@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Image from "next/image";
 import mobile from "@/public/images/xia poco x5.jpg";
+import HeavyComponent from "./components/HeavyComponent";
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
@@ -15,8 +16,9 @@ export default async function Home() {
           session && <span>{session.user!.name}</span>
         ) : (
           <span> There</span>
-        )}{" "}
+        )}
       </h1>
+      <HeavyComponent/>
       <div className="my-2">
         <Link href="/users" className="text-blue-600 underline">
           Users
